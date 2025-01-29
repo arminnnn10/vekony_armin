@@ -20,17 +20,29 @@ app.get("/",(req,res)=>{
 })
 
 app.get("/regiok",(req,res)=> {
-const sql = "SELECT * FROM `regiok`";
-db.query(sql, (err,result) => {
-    if (err) return res.json(err);
-    return res.json(result)
-})
+    const sql = "SELECT * FROM `regiok`";
+    db.query(sql, (err,result) => {
+        if (err) return res.json(err);
+        return res.json(result)
+    })
+    
+    })
 
-})
-
+app.post("/ujregio", (req, res) => {
+    const { Rid, regionev, regio_tipusa } = req.body;
+    const sql = "INSERT INTO `regiok` (`Rid`, `regionev`, `regio_tipusa`) VALUES (?, ?, ?)";
+    const VALUES = ['11', 'Budapest', 'Főváros'];
+ 
+    db.query(sql, VALUES, (err, result) => {
+        if (err) return res.json(err);
+        return res.json({ message: "Sikeres beszúrás", result });
+    });
+});
 
 
 
 app.listen(3001,()=> {
     console.log("server is running on port 3001")
 });
+
+
